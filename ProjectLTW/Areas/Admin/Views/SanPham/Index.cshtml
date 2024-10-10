@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <form asp-action="Search" method="get">
+        <input type="text" name="searchString" placeholder="Nhập thể loại cần tìm ..." value="@ViewBag.SearchString" />
+        <input type="submit" value="Tìm Kiếm" />
+    </form>
+    <hr />
+    <table class="table">
+        <thead>
+                <th>Tên sản phẩm</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+                <th>Hình ảnh</th>
+                <th>Thể loại</th>
+                <th>Chức năng</th>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                        <tr>
+                            <td width="25%">@item.Name</td>
+                            <td width="8%">@item.Description</td>
+                            <td width="8%">@item.price</td>
+                            <td width="30%"><img width="80%" src="@item.ImageUrl" alt="Hình sản phẩm" /></td>
+                            <td width="10%">@item.TheLoai.Name</td>
+                            <td width="19%">
+                                <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a class="text-danger" onclick="xoa(@item.Id, $(this))">Delete</a>
+
+                            </td>
+                        </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="SanPham" asp-action="Upsert" class="btn btn-primary">Thêm mới</a>
+</div>
+<script>
+    function xoa(id, row){
+        // Hiển thị cảnh báo xác nhận
+        if(confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
+            $.ajax({
+                url: `/Admin/SanPham/Delete/${id}`, // Kiểm tra URL chính xác
+                type: "POST", // Đảm bảo bạn đang sử dụng POST
+                success: function (data){
+                    if(data.success) {
+                        row.closest("tr").remove(); // Xóa dòng trong thẻ "tr"
+                        alert("Xóa thành công!");
+                    } else {
+                        alert("Xóa không thành công");
+                    }
+                },
+                error: function () {
+                    alert("Có lỗi xảy ra trong quá trình xóa.");
+                }
+            });
+        } else {
+            alert("Đã hủy bỏ việc xóa."); // Thông báo khi hủy
+        }
+    }
+</script>
+

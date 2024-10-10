@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <form asp-action="Search" method="get">
+        <input type="text" name="searchString" placeholder="Nhập thể loại cần tìm ..." value="@ViewBag.SearchString"/>
+        <input type="submit" value="Tìm Kiếm"  />
+    </form>
+    <hr />
+    <table class="table">
+        <thead>
+            <th>Tên Thể loại</th>
+            <th>Ngày tạo</th>
+            <th>Chức năng</th>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.TheLoai)
+            {
+                        <tr>
+                            <td width="30%">
+                        @item.Name
+                            </td>
+                            <td width="30%">
+                        @String.Format("{00:dd/MM/yyyy}", item.DateCreated)
+                            </td>
+                            <td width ="40%">
+                                <a asp-action="Edit" asp-route-id="@item.Id">
+                                    Edit
+                                </a> |
+                                <a asp-action="Detail" asp-route-id="@item.Id">
+                                    Detail
+                                </a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="TheLoai" asp-action="Create" class="btn btn-primary">Thêm mới</a>
+</div>
+

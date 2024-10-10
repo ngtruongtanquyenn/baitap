@@ -1,0 +1,12 @@
+﻿@model ProjectLTW.Models.TheLoai
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div>
+	ID: <b>@Model.Id</b> <br/>
+	Tên thể loại: <b>@Model.Name</b> <br/>
+	Ngày tạo: <b>@String.Format("{00:dd/MM/yyyy}", Model.DateCreated)</b> <br/>
+
+</div>

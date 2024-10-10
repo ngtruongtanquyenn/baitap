@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Index";
+
+}
+  <div class="row">
+    @foreach (var item in Model)
+    {
+          <div class="col-md-3">
+              <!-- Thêm lớp col-md-4 để chia cột -->
+              <a asp-action="Details" asp-route-id="@item.Id" style="text-decoration: none; color: inherit;">
+                  <!-- Thêm style để không làm thay đổi giao diện của thẻ a -->
+                  <div class="card" style="width: 18rem;">
+                      <img src="@item.ImageUrl" class="card-img-top" alt="Product image">
+                      <div class="card-body">
+                          <h5 class="card-title">@item.Name</h5>
+                          <h6 class="card-title">@item.price</h6>
+                          <p class="card-text">@item.Description</p>
+                          <div class="row">
+                              <div class="col-6">
+                                  <a href="#" class="btn btn-primary">Thêm &#10084</a>
+                              </div>
+                              <div class="col-6">
+                                  <a href="#" class="btn btn-danger">Mua hàng</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </a>
+          </div>
+    }
+  </div>
+
+ 
